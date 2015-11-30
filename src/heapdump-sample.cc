@@ -13,16 +13,22 @@ class FileOutputStream : public OutputStream {
   }
 
   virtual void EndOfStream() {
-    printf("end\n");
   }
 
   virtual WriteResult WriteAsciiChunk(char* data, int size) {
     return kContinue;
   }
+
+  virtual WriteResult WriteHeapStatsChunk(v8::HeapStatsUpdate* updateData, int count) {
+    for (int i = 0; i < count; ++i) {
+//      printf("index: %d, count: %d, size: %d\n", updateData[i].index,updateData[i].count,updateData[i].size);
+    }
+    return kContinue;
+  }
 };
 
-static FileOutputStream stream;
 NAN_METHOD(sample) {
+    FileOutputStream stream;
     info.GetIsolate()->GetHeapProfiler()->GetHeapStats(&stream);
 }
 
