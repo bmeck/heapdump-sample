@@ -1,5 +1,5 @@
 const hd = require("heapdump");
-const hds = require("heapdump-sample");
+const hds = require(".")//"//heapdump-sample");
 
 // turn on id tracking so sampling works
 hds.startTrackingHeapObjects();
