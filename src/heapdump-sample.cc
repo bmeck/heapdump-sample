@@ -59,7 +59,10 @@ NAN_METHOD(sample) {
   int fd = 0;
     if (info[0]->IsUint32()) {
       fd = info[0]->Uint32Value();
-      writeStr(fd, "{\"samples\":[\n");
+      writeStr(fd, "{\"timestamp\":");
+      unsigned int timestamp = uv_hrtime();
+      writeInt(fd, timestamp);
+      writeStr(fd, ",\"samples\":[\n");
     }
     FileOutputStream stream(fd);
     int last_assigned_id = info.GetIsolate()->GetHeapProfiler()->GetHeapStats(&stream);
